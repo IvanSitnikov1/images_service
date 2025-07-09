@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_imgserv
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: imgserv
+    volumes:
+      - /home/ivan/docker_volumes/postgres_imgserv/data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    restart: always
