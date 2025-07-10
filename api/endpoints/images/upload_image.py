@@ -30,7 +30,7 @@ async def upload_image(
         'file_path': original_image_path,
         'resolution': f'{width}x{height}',
         'file_size': file_size_kb,
-        'format': file_image.content_type,
+        'format': file_image.content_type.split('/')[1],
     }
     new_image = await image_repo.create(new_image_data)
 

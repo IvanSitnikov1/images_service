@@ -10,7 +10,7 @@ class ProcessedImageReadDTO(BaseModel):
     is_grayscale: bool
 
 
-class ImageReadResponseDTO(BaseModel):
+class ImageReadDTO(BaseModel):
     id: int
     name: str
     file_path: str
@@ -19,3 +19,13 @@ class ImageReadResponseDTO(BaseModel):
     file_size: int
     format: str
     processed_images: list[ProcessedImageReadDTO]
+
+
+class ImagesReadResponseDTO(BaseModel):
+    detail: str
+    data: list[ImageReadDTO]
+
+
+class ImageReadResponseDTO(BaseModel):
+    detail: str
+    data: ImageReadDTO

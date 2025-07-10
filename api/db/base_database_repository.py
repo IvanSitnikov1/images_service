@@ -2,7 +2,6 @@ from abc import ABC
 from typing import Type
 
 from fastapi import HTTPException
-from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -43,7 +42,7 @@ class BaseDatabaseRepository(ABC):
         return instance
 
     @handle_db_error
-    async def update(self, instance_id: int, updated_data: BaseModel, stmt: select = None):
+    async def update(self, instance_id: int, updated_data: dict, stmt: select = None):
         if stmt is None:
             stmt = select(self.model_class).where(self.model_class.id == instance_id)
         result = await self.session.execute(stmt)
@@ -52,7 +51,7 @@ class BaseDatabaseRepository(ABC):
         if not instance:
             raise HTTPException(status_code=404, detail="Объект не найден в базе данных")
 
-        for key, value in updated_data.model_dump(exclude_none=True).items():
+        for key, value in updated_data.items():
             setattr(instance, key, value)
 
         await self.session.commit()
