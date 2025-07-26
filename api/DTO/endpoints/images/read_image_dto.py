@@ -1,6 +1,6 @@
 from datetime import date
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class ProcessedImageReadDTO(BaseModel):
@@ -8,6 +8,8 @@ class ProcessedImageReadDTO(BaseModel):
     file_path: str
     resolution: str
     is_grayscale: bool
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ImageReadDTO(BaseModel):
@@ -19,6 +21,8 @@ class ImageReadDTO(BaseModel):
     file_size: int
     format: str
     processed_images: list[ProcessedImageReadDTO]
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ImagesReadResponseDTO(BaseModel):

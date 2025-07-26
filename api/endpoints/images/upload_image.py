@@ -4,15 +4,18 @@ from fastapi import UploadFile, File, HTTPException, Depends
 from PIL import Image as PilImage
 
 from api.DTO.endpoints.images.image_upload_dto import ImageUploadDTO
+from api.configs.dependensies import get_current_user
 from api.configs.get_obj_db import get_image_repo, get_processed_image_repo
 from api.configs.settings import settings
 from api.db.image_repository import ImageDatabaseRepository, ProcessedImageDatabaseRepository
+from api.models.users import User
 
 
 async def upload_image(
     file_image: UploadFile = File(...),
     image_repo: ImageDatabaseRepository = Depends(get_image_repo),
-    processed_image_repo: ProcessedImageDatabaseRepository = Depends(get_processed_image_repo)
+    processed_image_repo: ProcessedImageDatabaseRepository = Depends(get_processed_image_repo),
+    _: User = Depends(get_current_user),
 ):
     if not file_image.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail=f"Файл должен быть изображением")

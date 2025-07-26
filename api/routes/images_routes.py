@@ -2,6 +2,7 @@ from fastapi import status
 
 from api.DTO.endpoints.images.image_upload_dto import ImageUploadDTO
 from api.DTO.endpoints.images.read_image_dto import ImagesReadResponseDTO, ImageReadResponseDTO
+from api.DTO.endpoints.images.update_image import ImageUpdateReadResponseDTO
 from api.DTO.factories.router_factory import RouteDTO
 from api.endpoints.images.delete_image import delete_image
 from api.endpoints.images.get_image_by_id import get_image_by_id
@@ -61,7 +62,7 @@ IMAGES_ROUTES = [
     RouteDTO(
         path="/{image_id}",
         endpoint=update_image,
-        response_model=ImageReadResponseDTO,
+        response_model=ImageUpdateReadResponseDTO,
         methods=["PATCH"],
         status_code=status.HTTP_200_OK,
         summary="Редактирование названия изображения",
@@ -78,7 +79,7 @@ IMAGES_ROUTES = [
         path="/{image_id}",
         endpoint=delete_image,
         response_model=None,
-        methods=["PATCH"],
+        methods=["DELETE"],
         status_code=status.HTTP_204_NO_CONTENT,
         summary="Удаление изображения",
         description="""

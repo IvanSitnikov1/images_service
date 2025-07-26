@@ -27,10 +27,10 @@ class BaseDatabaseRepository(ABC):
         return new_instance
 
     @handle_db_error
-    async def read_all(self, stmt: select = None):
-        if stmt is None:
-            stmt = select(self.model_class)
-        result = await self.session.execute(stmt)
+    async def read_all(self, query: select = None):
+        if query is None:
+            query = select(self.model_class)
+        result = await self.session.execute(query)
         instances = result.scalars().all()
         return instances
 
@@ -42,10 +42,10 @@ class BaseDatabaseRepository(ABC):
         return instance
 
     @handle_db_error
-    async def update(self, instance_id: int, updated_data: dict, stmt: select = None):
-        if stmt is None:
-            stmt = select(self.model_class).where(self.model_class.id == instance_id)
-        result = await self.session.execute(stmt)
+    async def update(self, instance_id: int, updated_data: dict, query: select = None):
+        if query is None:
+            query = select(self.model_class).where(self.model_class.id == instance_id)
+        result = await self.session.execute(query)
         instance = result.scalar_one_or_none()
 
         if not instance:

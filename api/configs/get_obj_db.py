@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.configs.database import get_async_session
 from api.db.image_repository import ImageDatabaseRepository, ProcessedImageDatabaseRepository
+from api.db.user_repository import UserDatabaseRepository
 
 
 async def get_image_repo(session: AsyncSession = Depends(get_async_session)):
@@ -11,3 +12,7 @@ async def get_image_repo(session: AsyncSession = Depends(get_async_session)):
 
 async def get_processed_image_repo(session: AsyncSession = Depends(get_async_session)):
     yield ProcessedImageDatabaseRepository(session)
+
+
+async def get_user_repo(session: AsyncSession = Depends(get_async_session)):
+    yield UserDatabaseRepository(session)
